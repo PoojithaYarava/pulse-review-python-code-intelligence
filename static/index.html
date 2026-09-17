@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse Review | Python Code Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css?v=2" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Pulse Review home">
+        <span class="brand-mark">P</span>
+        <span>pulse<span class="brand-dot">.</span>review</span>
+      </a>
+
+      <div class="topbar-actions">
+        <div class="topbar-meta">
+          <span class="status-dot"></span>
+          <span>Local analysis engine</span>
+          <span class="version">v1.1</span>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle color theme">
+          <span class="theme-icon">☾</span>
+          <span>Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro reveal">
+        <div>
+          <p class="eyebrow">PYTHON CODE INTELLIGENCE</p>
+          <h1>Make every review<br /><em>worth reading.</em></h1>
+        </div>
+        <p class="intro-copy">A sharper second pair of eyes for Python code, with syntax checks, quality hints, complexity insight, and review history in one place.</p>
+      </section>
+
+      <section class="metrics reveal" aria-label="Review metrics">
+        <article>
+          <span class="metric-label">REVIEWS RUN</span>
+          <strong id="total-reviews">0</strong>
+          <span class="metric-note">in this workspace</span>
+        </article>
+        <article>
+          <span class="metric-label">AVERAGE SCORE</span>
+          <strong id="average-score">--</strong>
+          <span class="metric-note">out of 100</span>
+        </article>
+        <article>
+          <span class="metric-label">CRITICAL ISSUES</span>
+          <strong id="critical-issues">0</strong>
+          <span class="metric-note">need attention</span>
+        </article>
+        <article>
+          <span class="metric-label">COMPLEXITY FLAGS</span>
+          <strong id="complexity-warnings">0</strong>
+          <span class="metric-note">across reviews</span>
+        </article>
+      </section>
+
+      <section class="workspace reveal">
+        <div class="panel editor-panel">
+          <div class="panel-header">
+            <div>
+              <span class="panel-kicker">01 / SUBMIT</span>
+              <h2>Review your Python code</h2>
+            </div>
+            <div class="editor-actions">
+              <button id="example-button" class="text-button" type="button">Load example <span>↗</span></button>
+            </div>
+          </div>
+
+          <div class="editor-toolbar">
+            <label class="select-wrap" for="example-select">
+              <span>Snippet</span>
+              <select id="example-select" aria-label="Choose example snippet">
+                <option value="duplicate">Duplicate detection</option>
+                <option value="nested">Nested loops</option>
+                <option value="syntax">Syntax error</option>
+                <option value="sorted">Sorting example</option>
+              </select>
+            </label>
+            <div class="assist-actions">
+              <button id="copy-button" class="ghost-button" type="button">Copy</button>
+              <button id="clear-button" class="ghost-button" type="button">Clear</button>
+            </div>
+          </div>
+
+          <div class="editor-wrap">
+            <div class="line-numbers" id="line-numbers">1</div>
+            <textarea id="code-input" spellcheck="false" aria-label="Python code input">def find_duplicates(values):
+    seen = set()
+    duplicates = []
+    for value in values:
+        if value in seen:
+            duplicates.append(value)
+        seen.add(value)
+    return duplicates</textarea>
+          </div>
+
+          <div class="editor-footer">
+            <span><kbd>⌘</kbd> + <kbd>↵</kbd> to review Python</span>
+            <button id="review-button" class="primary-button" type="button">
+              <span>Run review</span>
+              <span class="button-arrow">→</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="panel results-panel">
+          <div class="panel-header">
+            <div>
+              <span class="panel-kicker">02 / FINDINGS</span>
+              <h2 id="result-title">Awaiting your code</h2>
+            </div>
+            <div id="score-badge" class="score-badge muted">--</div>
+          </div>
+
+          <div id="results-empty" class="empty-state">
+            <div class="empty-icon">⌁</div>
+            <p>Your review will appear here.</p>
+            <span>Syntax, complexity, and quality signals in one pass.</span>
+          </div>
+
+          <div id="results-content" class="results-content hidden">
+            <div id="syntax-result" class="syntax-result"></div>
+
+            <div class="summary-grid">
+              <div class="stat-block">
+                <span class="mini-label">QUALITY SCORE</span>
+                <strong id="quality-score">--</strong>
+              </div>
+              <div class="stat-block">
+                <span class="mini-label">FUNCTIONS</span>
+                <strong id="function-count">--</strong>
+              </div>
+              <div class="stat-block">
+                <span class="mini-label">LINES</span>
+                <strong id="line-count">--</strong>
+              </div>
+              <div class="stat-block">
+                <span class="mini-label">LOOP DEPTH</span>
+                <strong id="loop-depth">--</strong>
+              </div>
+            </div>
+
+            <div class="complexity-callout">
+              <div>
+                <span class="mini-label">ESTIMATED COMPLEXITY</span>
+                <strong id="complexity-estimate">--</strong>
+              </div>
+              <p id="complexity-explanation"></p>
+            </div>
+
+            <div class="summary-panel">
+              <span class="mini-label">REVIEW SUMMARY</span>
+              <p id="result-summary">Your review summary will appear here.</p>
+            </div>
+
+            <div class="summary-panel">
+              <span class="mini-label">NEXT STEPS</span>
+              <ul id="recommendations" class="recommendations-list">
+                <li>Review your code once the analysis completes.</li>
+              </ul>
+            </div>
+
+            <div class="issue-summary" id="issue-summary"></div>
+            <div class="issue-list" id="issue-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="history-section reveal">
+        <div class="section-heading">
+          <div>
+            <span class="panel-kicker">03 / HISTORY</span>
+            <h2>Recent reviews</h2>
+          </div>
+          <button id="refresh-history" class="icon-button" title="Refresh review history" type="button">↻</button>
+        </div>
+
+        <div class="history-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>REVIEW</th>
+                <th>SCORE</th>
+                <th>COMPLEXITY</th>
+                <th>ISSUES</th>
+                <th>WHEN</th>
+              </tr>
+            </thead>
+            <tbody id="history-body">
+              <tr>
+                <td colspan="5" class="history-empty">No reviews yet. Your next one starts the record.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Built for thoughtful code.</span>
+      <span>AST · TOKENIZE · SQLITE</span>
+    </footer>
+  </div>
+
+  <script src="/static/app.js?v=2"></script>
+</body>
+</html>
