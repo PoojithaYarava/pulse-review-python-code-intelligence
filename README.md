@@ -2,6 +2,14 @@
 
 A lightweight Python code-review assistant built with FastAPI, AST analysis, and SQLite.
 
+## Live Demo
+
+Try the deployed application here: [Pulse Review](https://pulse-review-python-code-intelligence.onrender.com/)
+
+Health check: [API health](https://pulse-review-python-code-intelligence.onrender.com/health)
+
+![Pulse Review dashboard](static/deployed-dashboard.png)
+
 ## Run locally
 
 ```powershell
